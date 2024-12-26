@@ -2,9 +2,7 @@
 
 int tudo(int n){
     if(n <= 2) return n;
-    else{
-        return tudo(n - 1) + tudo(n - 3);
-    }
+    return tudo(n - 1) + tudo(n - 3);
 }
 
 

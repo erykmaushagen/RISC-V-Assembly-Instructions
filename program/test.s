@@ -1,44 +1,54 @@
 .data
-  x: .word 10
-space: .ascii ", \0"
+n: .word 13
 
 .text
-.globl main 
-main:
-  lw s1, x
-  li t0, 0 
+.globl solution
 
-loop:
-  addi sp, sp, -4 
-  sw s1, 0(sp)
+solution:
+    lw a1, n
+    addi sp, sp, -4
+    sw ra, 0(sp)
 
-  mv a0, t0
-  jal unbekannt 
+    jal tudo
 
-  li a7, 1
-  ecall
-  li a7, 4
-  la a0, space
-  ecall
+    lw ra, 0(sp)
+    addi sp, sp, 4
 
-  addi t0, t0, 1
-  mv a0, t0
-  ble t0, s1, unbekannt
+    # Ausgabe des Ergebnisses
+    li a0, 1
+    ecall
 
-  lw s1, 0(sp)
-  addi sp, sp, 4
+    li a0, 10
+    ecall
+    ret
 
-  li a7, 10
-  ecall
+tudo:
+    addi sp, sp, -12
+    sw a1, 0(sp)
+    sw ra, 4(sp) 
+    sw t1, 8(sp)
 
-unbekannt:
-  addi t1, x0, 0
+    li t0, 2
+    ble a1, t0, base_case
 
-schleife:
-  beqz a0, break
-  add t1, t1, a0
-  addi a0, a0, -1
-  j schleife
-break:
-  mv a0, t1
-  jr ra
+    # Rekursiver Aufruf tudo(n - 1)
+    addi a1, a1, -1
+    jal tudo
+    mv t1, a1  # Ergebnis von tudo(n - 1) in t1 speichern
+
+    # Rekursiver Aufruf tudo(n - 3)
+    lw a1, 0(sp)  # Ursprünglichen Wert von n wiederherstellen
+    addi a1, a1, -3
+    jal tudo
+    add a1, a1, t1  # Ergebnis von tudo(n - 1) + tudo(n - 3) in a0
+
+    
+    lw ra, 4(sp)
+    lw t1, 8(sp)
+    addi sp, sp, 12
+    ret
+
+base_case: 
+    lw ra, 4(sp)
+    addi sp, sp, 12
+    ret
