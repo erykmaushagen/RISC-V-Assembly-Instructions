@@ -4,10 +4,11 @@
 .globl main
 main:
     li a1, 555
-    # Vor dem Funktionsaufruf Stack vorbereiten
+    # caller save: Aufrufende Prozedur (main) rettet vor Unterprogrammaufruf 
+    # Registerinhalte und kopiert sie danach zurück
     addi sp, sp, -8        # Platz für ra und a0 auf dem Stack reservieren
-    sw   ra, 4(sp)         # speichere Rücksprungadresse
-    sw   a1, 0(sp)         # speichere a0
+    sw   ra, 4(sp)         
+    sw   a1, 0(sp)         
 
     jal  ra, function     
 
@@ -21,13 +22,14 @@ main:
     ecall
 
 function:
+    # callee save: Gerufene Prozedur rettet nach dem Unterprogramm-Aufruf diese Registerinhalte 
+    # und kopiert sie vor dem Rücksprung zurück.
     addi sp, sp, -8        # Platz für ra und a0 auf dem Stack reservieren
-    sw   ra, 4(sp)         # speichere Rücksprungadresse
-    sw   a1, 0(sp)         # speichere a0
+    sw   ra, 4(sp)         
+    sw   a1, 0(sp)         
 
     #wert in a1 nur lokal existend
     li a1, 444
-    # Hier kann die Funktion ihren Code ausführen
 
     lw   a1, 0(sp)         # lade a0 zurück
     lw   ra, 4(sp)         # lade Rücksprungadresse zurück
