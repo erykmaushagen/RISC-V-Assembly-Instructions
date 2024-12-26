@@ -9,11 +9,12 @@ main:
   li t0, 0 
 
 loop:
-  addi sp, sp, -4 
+  addi sp, sp, -8
   sw s1, 0(sp)
+  sw t0, 4(sp)
 
   mv a0, t0
-  jal unbekannt 
+  jal ra, unbekannt 
 
   li a7, 1
   ecall
@@ -26,7 +27,8 @@ loop:
   ble t0, s1, unbekannt
 
   lw s1, 0(sp)
-  addi sp, sp, 4
+  lw t0, 4(sp) 
+  addi sp, sp, 8
 
   li a7, 10
   ecall
@@ -39,6 +41,7 @@ schleife:
   add t1, t1, a0
   addi a0, a0, -1
   j schleife
+  
 break:
   mv a0, t1
   jr ra
