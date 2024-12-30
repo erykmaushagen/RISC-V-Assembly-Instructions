@@ -22,11 +22,6 @@ solution:
     ecall
     ret
 
-# int tudo(int n){
-#     if(n <= 2) return n;
-#     return tudo(n - 1) + tudo(n - 3);
-# }
-
 tudo: 
     addi sp, sp, -8
     sw a0, 0(sp)
