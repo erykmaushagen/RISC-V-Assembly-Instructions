@@ -8,8 +8,8 @@ val: .word 0x0000FFFF
 .text 
 .globl main
 main: 
-    la t0, val 
-    lw a0, 0(t0) 
+    la a4, val 
+    lw a0, 0(a4) 
 
     li a1, 0            # init. result-reg.
     li a2, 31           # reg. size
@@ -24,6 +24,7 @@ loop:
     j loop 
 
 exit: 
+    sw a1, 0(a4) 
     li a0, 1
     ecall 
 

@@ -1,42 +1,35 @@
-# 011 -> 0 
-# 1011010 -> 0
-# 1101 -> 1
-
-
-.data
-val: .word 0b1011010
-
-.text
+# 0...01011101 -> 7
+# zähle führende Nullen bis man auf 1 trifft
+.data 
+u: .word 0b1001
+# bit parity: 01101 -> 1 
+# bit parity: 110101100 
+.text 
 .globl main
+main:
+    la t0, u 
+    lw a1, 0x0(t0) 
 
-main: 
-    la t0, val
-    lw a2, 0(t0) 
+    li a3, 0        # one counter
+    li a2, 32       # for iterration through register
 
-    li t1, 1        # for comparing with 1's
-    li a1, 0        # counter for one    
-    li a3, 32       # for iterating through register
+loop:   
+    beqz a2, exit   
+    andi t0, a1, 1      # extract smallest bit 
+    addi a2, a2 -1      # counter-- 
+    srli a1, a1, 1
+    bgt t0, x0, loop 
+    addi a3, a3, 1
+    j loop 
 
-loop:               #for counting 1's
-    beq a3, x0, final
-    and t0, a2, t1
-    beq t0, t1, increase
-    srli a2, a2, 1
-    addi a3, a3, -1
-    j loop
-
-increase: 
-    addi a1, a1, 1
-    srli a2, a2, 1
-    addi a3, a3, -1
-    j loop
-
-
-final:
-    and a1, a1, t1  # 1 wenn ungerade und 0 wenn gerade
-
+exit:   
+    li t2, 2
+    rem a1, a3, t2 
     li a0, 1
     ecall 
-
-    li a0, 10
+    li a0, 10 
     ecall 
+
+    
+
+    

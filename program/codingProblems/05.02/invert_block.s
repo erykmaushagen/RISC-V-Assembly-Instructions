@@ -5,7 +5,7 @@
 # Ergebnis: 
 
 .data
-val: .word 0b0000011000  # -> 00111 für 0 bis 4
+val: .word 0b0000000000  # -> 00111 für 0 bis 4
 
 .text
 .globl main
@@ -13,8 +13,8 @@ main:
     la t0, val 
     lw a0, 0(t0)
 
-    li a2, 4            # first pos. 
-    li a3, 6            # sec. pos. 
+    li a2, 3            # first pos. 
+    li a3, 4            # sec. pos. 
     li a4, 0            # submask 
     sub t0, a3, a2      # diff. 
 

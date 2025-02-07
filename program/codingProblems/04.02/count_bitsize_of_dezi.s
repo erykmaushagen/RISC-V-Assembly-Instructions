@@ -1,5 +1,5 @@
 .data
-x: .word 0xFFF
+x: .word 0x00000FFF0F
 # count bits till last 1  
 # 0x00000FFF -> 12
 # 0xF -> 4
@@ -23,6 +23,7 @@ loop:
     beq t1, zero, counter   
 
     add a1, a1, t2          # when bit is 1
+    li t2, 0
     addi a1, a1, 1
     j loop
 

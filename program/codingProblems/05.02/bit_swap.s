@@ -14,10 +14,10 @@ main:
     li t2, 2               # pos. 2 
 
     srl t3, a1, t1
-    addi t3, t3, 1         # bit pos. 1
+    andi t3, t3, 1         # bit pos. 1
 
     srl t4, a1, t2
-    addi t4, t4, 1         # bit pos. 2
+    andi t4, t4, 1         # bit pos. 2
 
     beq t3, t4, end
     

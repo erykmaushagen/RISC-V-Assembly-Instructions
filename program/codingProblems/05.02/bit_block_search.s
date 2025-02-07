@@ -3,7 +3,7 @@
 # in einem Register findet.
 
 .data
-val: .word 0b000000011111111000000011001101001
+val: .word 0b00000001111000000011001101001
 # output -> 5
 
 .text
