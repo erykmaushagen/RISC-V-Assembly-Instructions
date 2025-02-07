@@ -15,13 +15,13 @@ jumptable: .word L0, L1, L2, L3
 .globl switch
 switch: 
     li a1, 0            # a1 initialisiere das Ergebnis-register 
-    li t0, 3            # k := 2 für L2
-    li t1, 4            # t := 4 für sprung
-    mul t3, t1, t0      # cur := 4 * t
+    li t0, 2            # k := 2 für L2
+    li t1, 4            # 4 für sprung im Speicher
+    mul t3, t1, t0      # cur := 4 * k
     
     la t4, jumptable
     add t3, t3, t4
-    lw t2, 0(t3) 
+    lw t2, 0(t3)        # t2 := address[speiche[L1]] 
     jr t2               # adresse von Lx ist in t2
 
 L0:     

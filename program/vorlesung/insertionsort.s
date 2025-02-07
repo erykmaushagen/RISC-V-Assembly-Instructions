@@ -1,33 +1,55 @@
-# int v[10000]
-# sort (int v[], int n) 
-# { int, j;
-#     for (i=0; i<n; i=i+1) {
-#         for (j=i-1; j>=0 && v[j]>v[j+1]; j=j-1) {
-#             swap(v, j);  
-#         }
-#     }  
-# }
+
 .data
-v: .word 1, 2, 3, 4, 5, 6 , 7
+array: .word 54, 2, 53, 2, 52, 6, 16, 13, 33, 31, 34, 3
 
 .text
-.globl main 
+.globl swap 
 
-main:
-    la t0, v
+insertionsort:
+    li a4, 0        # i := 0
+    li a3, 12       # n := 12
+
+    la a2, array
+
+for1: 
+    bge a4, a3, exit1
+    addi a1, a4, -1     # j := i - 1
+
+for2: 
+    bltz a1, exit2 
+    li t0, 4
+    mul t0, t0, a1      # t0 := 4*j
+    add t0, a2, t0
+    lw t1, 0(t0)        # t1 := v[k] 
+    lw t2, 4(t0)        # t2 := v[k + 1]
+    blt t2, t1, exit2
+    j swap
+    addi a1, a1, -1 
+
+exit2: 
+    addi a4, a4, -1 
+    j for1
+
+exit1: 
+    li a0, 10       # beende Programm 
+    ecall 
+
+
+#t2 für index der beiden tauschenden werte 
+swap:
+    la t0, array
     #vertausch die werte v[2] und v[3]
     li t1, 4            # für speicher-itteration 
-    li t2, 2            # k := 2
+    mv t2, a1            # k := 2 t2 
     mul t1, t1, t2
     add t0, t1, t0      # adresse v[k]
     lw a2, 0(t0)        # lade v[k]
     lw a3, 4(t0)        # lade v[k + 1]
-    jal swap
+    jal apply
 
-    li a0, 10
-    ecall 
+    ret 
 
-swap: 
+apply: 
     addi sp, sp, -16
     sw t0, 0(sp)
     sw a2, 4(sp)
@@ -45,3 +67,7 @@ swap:
 
     #jalr x0, ra, 0
     jr ra
+    
+
+
+
