@@ -1,7 +1,7 @@
 # 0...01011101 -> 7
 # zähle führende Nullen bis man auf 1 trifft
 .data 
-u: .word 0b1001
+u: .word 0b10011
 # bit parity: 01101 -> 1 
 # bit parity: 110101100 
 .text 
