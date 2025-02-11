@@ -8,44 +8,38 @@
 #     }
 # }
 
-.data 
-a: .word 7 
-b: .word 5
-
-.text 
+.data
+val1: .word 7
+val2: .word 5 
+.text
 .globl main
 main: 
-    la t0, a    
-    lw a0, 0x0(t0)          # a0 -> a
-    la t0, b
-    lw a1, 0x0(t0)          # a1 -> b
+    la t0, val1
+    lw a0, 0x0(t0)          # a
+    la t0, val2
+    lw a1, 0x0(t0)          # b 
 
-    li a2, 0                # a2 -> max
-    ble a0, a1, jump
-    mv a2, a0 
+    li a2, 0       # max
+
+    bge a0, a1 jump
+    mv a2, a0
     j loop
-
-jump:    
-    mv a2, a1 
-    j loop
-
+jump: 
+    mv a2, a1
 loop: 
-    rem t0, a2, a0
-    beqz t0, and 
+    rem t0, a2, a0 
+    bnez t0, increase 
+    rem t0,  a2, a1 
+    bnez t0, increase
+    j exit 
+increase:   
     addi a2, a2, 1
-    j loop
-
-and: 
-    rem t1, a2, a1 
-    beqz t1, exit 
-    addi a2, a2, 1
-    j loop
+    j loop 
 
 exit: 
     mv a1, a2
     li a0, 1
-    ecall 
-    li a0,10 
     ecall
-
+    li a0, 10 
+    ecall 
 

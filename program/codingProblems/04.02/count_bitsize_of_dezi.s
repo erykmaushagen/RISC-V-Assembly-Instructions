@@ -9,10 +9,10 @@ main:
     la t0, x 
     lw a0, 0(t0) 
 
-    li t0, 32 # total bit-siz
-    li a3, 1  # for comparing
-    li a1, 0  # total bit counter
-    li t2, 0  # internal counter
+    li t0, 32     
+    li a3, 1  
+    li a1, 0 
+    li t2, 0  
 
 
 loop: 

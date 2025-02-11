@@ -6,6 +6,9 @@
 x: .word 0b111
 y: .word 0b0101 
 # output: x & y -> 1110101
+# 1, 4, 32,
+# 80 
+# 112 
 
 .text
 .globl main

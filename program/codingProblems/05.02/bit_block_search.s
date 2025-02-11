@@ -4,7 +4,7 @@
 
 .data
 val: .word 0b00000001111000000011001101001
-# output -> 5
+# output -> 4
 
 .text
 .globl main
